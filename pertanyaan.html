@@ -1,228 +1,226 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Potretaksi - Echoes of Silence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<!-- FONT POPPINS -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+        body {
+            background-color: #000;
+            color: #ffffff;
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.5;
+        }
 
-<title>Detail Film</title>
+        /* Container Video */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* Aspect Ratio 16:9 */
+            background-color: #111;
+        }
 
-<style>
-body{
-  margin:0;
-  padding-bottom:60px; /* SPACE KOSONG DI BAWAH */
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(to bottom, #000000 0%, #0f1e3a 100%);
-  color:white;
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Tombol Back */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+        }
+
+        /* Konten Detail */
+        .content-details {
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .meta-data {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .match-score {
+            color: #46d369;
+            font-weight: bold;
+        }
+
+        .rating-box {
+            border: 1px solid #888;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #ccc;
+        }
+
+        .duration {
+            color: #aaa;
+        }
+
+        /* Baris Tombol Aksi */
+        .action-bar {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .action-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #fff;
+            transition: opacity 0.2s;
+        }
+
+        .action-item:active {
+            opacity: 0.6;
+        }
+
+        .action-item i {
+            font-size: 24px;
+        }
+
+        .action-item span {
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        /* Garis Pemisah */
+        hr {
+            border: 0;
+            border-top: 1px solid #333;
+            margin-bottom: 25px;
+        }
+
+        /* Sinopsis & Genre */
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .synopsis-text {
+            color: #ccc;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .genre-tags {
+            display: flex;
+            gap: 10px;
+        }
+
+        .tag {
+            background-color: #333;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #eee;
+        }
+        
+                * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    outline: none;
 }
 
-/* ===== VIDEO ===== */
-.video-container{
-  position:relative;
-  width:100%;
-  padding-top:56.25%;
-  overflow:hidden;
+body {
+    background-color: #000;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.5;
+    /* Tambahkan ini */
+    padding-bottom: 50px; 
 }
 
-.video-container iframe{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-}
-
-.video-gradient{
-  position:absolute;
-  bottom:0;
-  left:0;
-  width:100%;
-  height:50%;
-  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 100%);
-  pointer-events:none;
-}
-
-/* ===== CARD ===== */
-.card{
-  background: linear-gradient(145deg, #1b1b1b, #2a2a2a);
-  margin:20px;
-  padding:25px;
-  border-radius:10px;
-  box-shadow:0 15px 40px rgba(0,0,0,0.6);
-}
-
-/* ATAS (ADA POSTER) */
-.top-section{
-  display:flex;
-  gap:20px;
-  align-items:flex-start;
-}
-
-.text-section{
-  flex:1;
-}
-
-.text-section h1{
-  margin:0;
-  font-weight:700;
-  font-size:22px;
-}
-
-.genre{
-  margin:5px 0 10px 0;
-  font-weight:400;
-  opacity:0.8;
-  font-size:12px;
-}
-
-.synopsis{
-  font-size:12px;
-  line-height:1.6;
-  opacity:0.9;
-}
-
-/* POSTER 3:4 */
-.poster{
-  width:130px;
-  aspect-ratio:3/4;
-  object-fit:cover;
-  border-radius:15px;
-}
-
-/* BAWAH (FULL WIDTH) */
-.bottom-section{
-  margin-top:20px;
-}
-
-.bottom-section p{
-  margin:6px 0;
-  font-size:14px;
-  opacity:0.9;
-}
-
-hr{
-  border:0.5px solid rgba(255,255,255,0.2);
-  margin:20px 0;
-}
-
-/* INFO */
-.info-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
-  margin-top:15px;
-}
-
-.info-item{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.info-item img{
-  width:45px;
-  aspect-ratio:1/1;
-  border-radius:50%;
-  object-fit:cover;
-}
-
-/* BUTTON */
-.back-btn{
-  display:inline-block;
-  padding:12px 40px; /* lebih proporsional */
-  margin:30px auto 0 auto;
-  background:white;
-  color:black;
-  font-weight:600;
-  border-radius:12px;
-  text-decoration:none;
-  text-align:center;
-}
-
-.back-btn-wrapper{
-  text-align:center;
-}
-
-/* HILANGKAN EFEK BIRU SAAT DI KLIK */
-* {
-  -webkit-tap-highlight-color: transparent;
-}
-
-a, button, img, iframe, div {
-  outline: none;
-}
-
-a:focus,
-button:focus {
-  outline: none;
-}
-</style>
+    </style>
 </head>
 <body>
 
-<!-- VIDEO -->
-<div class="video-container">
-  <iframe 
-    src="https://videos.sproutvideo.com/embed/729bd2bc1e1eecc9f8/1d10fe9142b563c9"
-    frameborder="0"
-    allowfullscreen>
-  </iframe>
-  <div class="video-gradient"></div>
-</div>
-
-<!-- CARD DETAIL -->
-<div class="card">
-  <div class="top-section">
-    <div class="text-section">
-      <h1>Pertanyaan Dalam Kubur</h1>
-      <div class="genre">Horor • Dokumenter</div>
-      <div class="synopsis">
-        Menceritakan tentang satu orang yang bernama Iman yang tidak mempunyai keyakinan terhadap agamanya terlebih dia tidak percaya terhadap adanya pertanyaan di dalam kubur kemudian dia mencoba membuktikannya namun terjadi sesuatu hal
-      </div>
+    <div class="video-container">
+<a href="index.html" class="back-button">
+    <i class="fas fa-arrow-left"></i>
+</a>
+        
+        <iframe 
+            src="https://drive.google.com/file/d/1_V6CwUcyWM41cLhKBo3GqY3QXeNV_gMK/preview" 
+            allowfullscreen>
+        </iframe>
     </div>
 
-    <img src="pertanyaaku.jpg" class="poster">
-  </div>
+    <div class="content-details">
+        <h1>Pertanyaan Dalam Kubur</h1>
 
-  <div class="bottom-section">
-    <hr>
-    <p>Sutradara: Rezky Arraqqat</p>
-    <p>Produksi: rzkyrrqqt pictures</p>
-  </div>
-</div>
+        <div class="meta-data">
+            <span class="match-score">98% Match</span>
+            <span class="year">2024</span>
+            <span class="rating-box">17+</span>
+            <span class="duration">15 Minutes</span>
+        </div>
 
-<!-- INFO CARD -->
-<div class="card">
-  <p>Dibintangi oleh: Rezky Arraqqat</p>
-  <hr>
+        <div class="action-bar">
+            <a href="https://www.instagram.com/potretaksi.id?igsh=NXNrNG42MHphcnJm" class="action-item">
+                <i class="fas fa-plus"></i>
+                <span>My List</span>
+            </a>
+            <a href="https://www.instagram.com/potretaksi.id?igsh=NXNrNG42MHphcnJm" class="action-item">
+                <i class="fas fa-share-nodes"></i>
+                <span>Share</span>
+            </a>
+            <a href="https://www.instagram.com/potretaksi.id?igsh=NXNrNG42MHphcnJm" class="action-item">
+                <i class="fas fa-circle-info"></i>
+                <span>Info</span>
+            </a>
+        </div>
 
-  <div class="info-grid">
-    <div class="info-item">
-      <img src="durasi.png">
-      <span>14 Menit</span>
+        <hr>
+
+        <h3 class="section-title">Synopsis</h3>
+        <p class="synopsis-text">
+            Tentang seorang pria yang mempertanyakan tentang kebenaran agama dan membuktikan tentang adanya siksa kubur.
+        </p>
+
+        <h3 class="section-title">Genres</h3>
+        <div class="genre-tags">
+            <span class="tag">Horor</span>
+            <span class="tag">Dokumenter</span>
+        </div>
     </div>
-
-    <div class="info-item">
-      <img src="bahasa.png">
-      <span>Indonesia</span>
-    </div>
-
-    <div class="info-item">
-      <img src="rating.png">
-      <span>17+</span>
-    </div>
-    <div class="info-item">
-      <img src="quality.png">
-      <span>1080p</span>
-    </div>
-  </div>
-</div>
-
-<div class="back-btn-wrapper">
-  <a href="Postiflix.html" class="back-btn">Back</a>
-</div>
 
 </body>
 </html>

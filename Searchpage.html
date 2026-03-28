@@ -1,212 +1,355 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Search Film</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POTRETAKSI - Search</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --nav-dark: #121212; /* Warna abu-abu gelap sesuai permintaan */
+        }
 
-<!-- FONT POPPINS -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding-bottom: 80px; /* Jarak agar konten tidak tertutup nav bawah */
+        }
 
-<style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  -webkit-tap-highlight-color: transparent; /* 🔥 HILANGKAN BIRU */
-}
+        * {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            outline: none;
+            box-sizing: border-box;
+        }
 
-html,body{
-  max-width:100%;
-  overflow-x:hidden;
-}
+        /* Header */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            background-color: #000;
+        }
 
-body{
-  font-family:'Poppins',sans-serif;
-  background:#0f0f0f;
-  color:#fff;
-  padding-bottom:190px;
-}
+        .logo {
+            color: #E50914;
+            font-weight: 900;
+            font-size: 24px;
+            font-style: italic;
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
 
-/* HILANGKAN OUTLINE */
-a, button, input, div{
-  outline:none;
-  border:none;
-}
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
 
-/* SEARCH BAR */
-.search-bar{
-  padding:14px;
-  background:#1a1a1a;
-}
+        .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
 
-.search-bar input{
-  width:100%;
-  padding:14px;
-  border-radius:8px;
-  background:#2a2a2a;
-  color:#fff;
-  font-size:15px;
-  font-family:'Poppins',sans-serif;
-}
+        .search-icon-top {
+            color: #E50914;
+            font-size: 20px;
+        }
 
-.search-bar input:focus{
-  outline:none;
-}
+        /* Search Bar Area */
+        .search-container {
+            padding: 10px 20px;
+        }
 
-/* SECTION */
-.section{
-  padding:16px;
-}
+        .search-box {
+            background: #262626;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+        }
 
-.section h2{
-  margin-bottom:14px;
-  font-size:25px;
-  font-weight:600;
-}
+        .search-box i {
+            color: #888;
+            margin-right: 10px;
+        }
 
-/* GRID */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:14px;
-}
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            outline: none;
+            width: 100%;
+            font-size: 16px;
+        }
 
-/* POSTER */
-.poster{
-  aspect-ratio:3/4;
-  border-radius:10px;
-  overflow:hidden;
-  cursor:pointer;
-  background:#222;
-  transition:0.3s;
-}
+        /* Content List */
+        .content-section {
+            padding: 20px;
+        }
 
-.poster img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-}
+        .section-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
 
-.poster:active{
-  transform:scale(0.98);
-}
+        #movieContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
 
-/* HIDDEN */
-.hidden{display:none;}
+        .movie-item {
+            display: flex;
+            align-items: center;
+            background: #121212;
+            overflow: hidden;
+            transition: background 0.3s;
+        }
 
-/* NOT FOUND */
-.not-found{
-  text-align:center;
-  margin-top:40px;
-  opacity:0.6;
-  font-size:14px;
-  font-weight:300;
-}
+        .thumbnail-wrapper {
+            width: 40%;
+            aspect-ratio: 16 / 9;
+            flex-shrink: 0;
+        }
 
-/* NAV */
-.nav-overlay{
-  position:fixed;
-  bottom:0;
-  left:0;
-  width:100%;
-  height:70px;
-  background:rgba(0,0,0,0.95);
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-  z-index:9999;
-}
+        .thumbnail-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-.nav-btn img{
-  width:49px;
-  height:50px;
-  opacity:0.85;
-  transition:0.3s;
-}
+        .movie-info {
+            flex-grow: 1;
+            padding: 0 15px;
+            font-weight: 600;
+            font-size: 16px;
+        }
 
-.nav-btn img:active{
-  transform:scale(0.95);
-  opacity:1;
-}
-</style>
+        .play-btn {
+            color: #fff;
+            font-size: 32px;
+            margin-right: 15px;
+            text-decoration: none;
+        }
+
+        /* Navigasi Bawah (Style Sesuai Request) */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: var(--nav-dark);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            border-top: 1px solid #222;
+            z-index: 2000;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #757575; /* Warna abu-abu untuk link tidak aktif */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 10px;
+            gap: 4px;
+        }
+
+        .nav-link.active { 
+            color: white; /* Hanya Search yang putih di halaman ini */
+        }
+
+        .nav-link i { 
+            font-size: 20px; 
+        }
+
+        /* Not Found Message */
+        #notFound {
+            display: none;
+            text-align: center;
+            padding: 50px 20px;
+            color: #555;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="search-bar">
-  <input type="text" id="searchInput" placeholder="Type title here">
-</div>
+    <header>
+        <a href="index.html" class="logo">POTRETAKSI</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="upcoming.html">Coming Soon</a>
+            <i class="fa-solid fa-magnifying-glass search-icon-top"></i>
+        </div>
+    </header>
 
-<div class="section" id="popularSection">
-  <h2>Populer Search</h2>
-  <div class="grid" id="popularGrid"></div>
-</div>
+    <div class="search-container">
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="searchInput" placeholder="Search for a movie, genre...">
+        </div>
+    </div>
 
-<div class="section hidden" id="resultSection">
-  <h2></h2>
-  <div class="grid" id="resultGrid"></div>
-  <div class="not-found hidden" id="notFound">Film tidak ditemukan</div>
-</div>
+    <section class="content-section">
+        <h2 class="section-title">Top Searches</h2>
 
-<script>
-const searchInput=document.getElementById("searchInput");
-const popularSection=document.getElementById("popularSection");
-const resultSection=document.getElementById("resultSection");
-const popularGrid=document.getElementById("popularGrid");
-const resultGrid=document.getElementById("resultGrid");
-const notFound=document.getElementById("notFound");
+        <div id="movieContainer">
+            <div class="movie-item">
+                <div class="thumbnail-wrapper">
+                    <img src="siccinthumbnail.jpg" alt="Siccin">
+                </div>
+                <div class="movie-info">Siccin</div>
+                <a href="siccinfilm.html" class="play-btn">
+                    <i class="fa-regular fa-circle-play"></i>
+                </a>
+            </div>
 
-const films=[
-{ title:"Pertanyaan Dalam Kubur", poster:"pertanyaaku.jpg", link:"pertanyaan.html" },
-{ title:"Merasuk: First Possesion", poster:"merasukku.jpg", link:"merasukfilm.html" },
-{ title:"Penunggu Dari Kematian", poster:"penungguku.jpg", link:"leuweungfilm.html" },
-{ title:"Leuweung Setan", poster:"leuweungku.jpg", link:"leuweungfilm.html" },
-{ title:"Dia Terpanggil", poster:"diaku.jpg", link:"diaterpanggilfull.html" },
-{ title:"Kembalinya Ningrum", poster:"ningcomku.jpg", link:"ningrumfilm.html" },
-{ title:"Searching First Case", poster:"Searchingku.jpg", link:"searchingepisode1.html" },
-{ title:"Siccin", poster:"siccinposter.jpg", link:"siccinfilm.html" },
-{ title:"School Nightmare", poster:"schoolnightmareps.jpg", link:"schoolnightmarefilm.html" }
-];
+            <div class="movie-item">
+                <div class="thumbnail-wrapper">
+                    <img src="snthumbnail.jpg" alt="School Nightmare">
+                </div>
+                <div class="movie-info">School Nightmare</div>
+                <a href="schoolnightmarefilm.html" class="play-btn">
+                    <i class="fa-regular fa-circle-play"></i>
+                </a>
+            </div>
 
-films.forEach(film=>{
-popularGrid.innerHTML+=`
-<div class="poster" onclick="location.href='${film.link}'">
-<img src="${film.poster}" alt="${film.title}">
-</div>`;
-});
+            <div class="movie-item">
+                <div class="thumbnail-wrapper">
+                    <img src="ningrumthumbnail.png" alt="Kembalinya Ningrum">
+                </div>
+                <div class="movie-info">Kembalinya Ningrum</div>
+                <a href="ningrumfilm.html" class="play-btn">
+                    <i class="fa-regular fa-circle-play"></i>
+                </a>
+            </div>
 
-searchInput.addEventListener("input",()=>{
-const keyword=searchInput.value.toLowerCase().trim();
+            <div class="movie-item">
+                <div class="thumbnail-wrapper">
+                    <img src="merasukthumbnail.png" alt="Merasuk: First Possession">
+                </div>
+                <div class="movie-info">Merasuk: First Possession</div>
+                <a href="merasukfilm.html" class="play-btn">
+                    <i class="fa-regular fa-circle-play"></i>
+                </a>
+            </div>
 
-popularSection.classList.toggle("hidden",keyword!=="");
-resultSection.classList.toggle("hidden",keyword==="");
+            <div class="movie-item">
+                <div class="thumbnail-wrapper">
+                    <img src="pertanyaanthumbnail.jpg" alt="Pertanyaan Dalam Kubur">
+                </div>
+                <div class="movie-info">Pertanyaan Dalam Kubur</div>
+                <a href="pertanyaan.html" class="play-btn">
+                    <i class="fa-regular fa-circle-play"></i>
+                </a>
+            </div>
 
-resultGrid.innerHTML="";
-notFound.classList.add("hidden");
+            <div class="movie-item">
+                <div class="thumbnail-wrapper">
+                    <img src="gagabahthumbnail.jpg" alt="Gagabah: Ucap Laku Lampah">
+                </div>
+                <div class="movie-info">Gagabah: Ucap Laku Lampah</div>
+                <a href="gagabahfilm.html" class="play-btn">
+                    <i class="fa-regular fa-circle-play"></i>
+                </a>
+            </div>
+            
+                <div class="movie-item">
+                <div class="thumbnail-wrapper">
+                    <img src="tertipumuslihatthumbnail.jpg" alt="Tertipu Muslihat">
+                </div>
+                <div class="movie-info">Tertipu Muslihat</div>
+                <a href="tertipumuslihatfilm.html" class="play-btn">
+                    <i class="fa-regular fa-circle-play"></i>
+                </a>
+            </div>
+           <div class="movie-item">
+                <div class="thumbnail-wrapper">
+                    <img src="searchingthumbnail.jpg" alt="Searching: First Case">
+                </div>
+                <div class="movie-info">Searching: First Case</div>
+                <a href="searchingepisode1.html" class="play-btn">
+                    <i class="fa-regular fa-circle-play"></i>
+                </a>
+            </div>
+            
+            <div class="movie-item">
+                <div class="thumbnail-wrapper">
+                    <img src="pdkthumbnail.jpg" alt="Penunggu Dari Kematian">
+                </div>
+                <div class="movie-info">Penunggu Dari Kematian</div>
+                <a href="leuweungfilm.html" class="play-btn">
+                    <i class="fa-regular fa-circle-play"></i>
+                </a>
+            </div>
+            
+            <div class="movie-item">
+                <div class="thumbnail-wrapper">
+                    <img src="diakuthumbnail.jpg" alt="Dia Terpanggil">
+                </div>
+                <div class="movie-info">Dia Terpanggil</div>
+                <a href="diaterpanggilfull.html" class="play-btn">
+                    <i class="fa-regular fa-circle-play"></i>
+                </a>
+            </div>
+        </div>
 
-const results=films.filter(f=>f.title.toLowerCase().includes(keyword));
+        <div id="notFound">
+            <i class="fas fa-search-minus" style="font-size: 40px; margin-bottom: 10px;"></i>
+            <p>Film tidak ditemukan</p>
+        </div>
+    </section>
 
-if(!results.length && keyword!==""){
-notFound.classList.remove("hidden");
-return;
-}
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-link">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="upcoming.html" class="nav-link">
+            <i class="fas fa-layer-group"></i>
+            <span>Coming Soon</span>
+        </a>
+        <a href="Searchpage.html" class="nav-link active">
+            <i class="fas fa-search"></i>
+            <span>Search</span>
+        </a>
+    </nav>
 
-results.forEach(film=>{
-resultGrid.innerHTML+=`
-<div class="poster" onclick="location.href='${film.link}'">
-<img src="${film.poster}">
-</div>`;
-});
-});
-</script>
+    <script>
+        // Logika Pencarian Real-time
+        const searchInput = document.getElementById('searchInput');
+        const movieContainer = document.getElementById('movieContainer');
+        const movieItems = movieContainer.getElementsByClassName('movie-item');
+        const notFound = document.getElementById('notFound');
 
-<div class="nav-overlay">
-<a href="Postiflix.html" class="nav-btn"><img src="rumahku.png"></a>
-<a href="Searchpage.html" class="nav-btn"><img src="searchbtn.png"></a>
-<a href="upcoming.html" class="nav-btn"><img src="enyarrek.png"></a>
-</div>
+        searchInput.addEventListener('input', function() {
+            const query = searchInput.value.toLowerCase();
+            let hasResults = false;
+
+            for (let i = 0; i < movieItems.length; i++) {
+                const title = movieItems[i].querySelector('.movie-info').textContent.toLowerCase();
+                
+                if (title.includes(query)) {
+                    movieItems[i].style.display = 'flex';
+                    hasResults = true;
+                } else {
+                    movieItems[i].style.display = 'none';
+                }
+            }
+
+            // Tampilkan pesan jika tidak ada film yang cocok
+            notFound.style.display = hasResults ? 'none' : 'block';
+        });
+    </script>
 
 </body>
 </html>
