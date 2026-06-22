@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POTRETAKSI - Masuk</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            /* Background gradasi merah tua ke hitam sesuai request */
+            background: radial-gradient(circle at center, #450303 0%, #000000 100%);
+            background-attachment: fixed;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 20px;
+        }
+
+        /* Header untuk menampung logo di pojok kanan atas */
+        header {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            color: #E50914;
+            font-size: 1.8rem; /* Ukuran kecil sesuai request */
+            letter-spacing: 1px;
+            text-decoration: none;
+        }
+
+        /* Container Utama Form Login */
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 40px 30px;
+            border-radius: 8px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        /* Styling Input Box ala Netflix */
+        .input-box {
+            width: 100%;
+            padding: 16px 12px;
+            background: #161616;
+            border: 1px solid #8c8c8c;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .input-box:focus {
+            border-color: #fff;
+            box-shadow: 0 0 0 1px #fff;
+        }
+
+        /* Tombol Start (Lanjutkan) */
+        .btn-start {
+            width: 100%;
+            padding: 14px;
+            background-color: #E50914;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+
+        .btn-start:hover {
+            background-color: #b80710;
+        }
+
+        /* Tombol Premium mengarah ke YouTube */
+        .btn-premium {
+            display: block;
+            text-align: center;
+            width: 100%;
+            padding: 12px;
+            background-color: transparent;
+            color: #ff0000;
+            border: 2px solid #ff0000;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-decoration: none;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+
+        .btn-premium:hover {
+            background-color: #ff0000;
+            color: #fff;
+        }
+
+        /* Pesan Error di bawah kolom password */
+        .error-message {
+            color: #EB3942;
+            font-size: 0.85rem;
+            margin-top: 8px;
+            display: none; /* Tersembunyi secara default */
+        }
+
+        /* Footer Keterangan Tambahan */
+        .footer-text {
+            color: #737373;
+            font-size: 0.8rem;
+            margin-top: 30px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">POTRETAKSI</a>
+    </header>
+
+    <div class="login-container">
+        <h1>Masukkan infomu untuk masuk</h1>
+        
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <input type="text" id="username" class="input-box" placeholder="Email atau nomor ponsel" required>
+            </div>
+
+            <div class="form-group">
+                <input type="password" id="password" class="input-box" placeholder="Kata sandi" required>
+                <div id="errorText" class="error-message">Incorrect username or password</div>
+            </div>
+
+            <button type="submit" class="btn-start">Start</button>
+            
+            <a href="https://www.instagram.com/potretaksi.id?igsh=MTY0OXdqbWRmcjV5eg==" target="_blank" class="btn-premium">LANGGANAN PREMIUM</a>
+        </form>
+
+        <div class="footer-text">
+            Halaman ini dilindungi oleh reCAPTCHA Google untuk memastikan kamu bukan bot.
+        </div>
+    </div>
+
+    <script>
+        // Data akun yang hanya bisa Anda atur di sini (Ganti sesuai kebutuhan)
+        const userDatabase = [
+            { username: "forwatch45@potsiflix.com", password: "104958", targetPage: "home.html" },
+            { username: "watchmovto75@potsiflix.com", password: "501029", targetPage: "home.html" },
+            { username: "expanderrain27@potsiflix.com", password: "112090", targetPage: "home.html" }
+        ];
+
+        function handleLogin(event) {
+            event.preventDefault(); // Mencegah reload halaman saat submit
+            
+            const usernameInput = document.getElementById('username').value;
+            const passwordInput = document.getElementById('password').value;
+            const errorText = document.getElementById('errorText');
+
+            // Cari apakah ada data yang cocok di dalam userDatabase
+            const validUser = userDatabase.find(user => user.username === usernameInput && user.password === passwordInput);
+
+            if (validUser) {
+                // Jika benar, sembunyikan error dan alihkan ke file HTML masing-masing
+                errorText.style.display = 'none';
+                window.location.href = validUser.targetPage;
+            } else {
+                // Jika salah (salah satu atau keduanya), munculkan pesan error merah di bawah password
+                errorText.style.display = 'block';
+            }
+        }
+    </script>
+
+</body>
+</html>
